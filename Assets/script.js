@@ -2,6 +2,42 @@
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
 $(function () {
+
+function createHourElements() {
+for (var i = 9; i <= 17; i++) {
+  var hourListEl = $('#hour-list');
+
+  var hourEl = $('<div>');
+  hourEl.addClass('row time-block')
+
+  var hourTitle = $('<div>');
+  hourTitle.text(dayjs().hour(i).format('ha'));
+  hourTitle.addClass('col-2 col-md-1 hour text-center py-3');
+  
+  var inputBox = $('<textarea>');
+  inputBox.addClass('col-8 col-md-10 description');
+  // inputBox.addrows('3')
+  
+  var saveBtnEl = $('<button>');
+  saveBtnEl.addClass('btn saveBtn col-2 col-md-1');
+
+  var btnLink = $('<i>')
+  btnLink.addClass('fas fa-save')
+
+  saveBtnEl.append(btnLink);
+
+  hourEl.append(hourTitle);
+  hourEl.append(inputBox);
+  hourEl.append(saveBtnEl);
+
+  hourListEl.append(hourEl)
+
+  //saveBtnEl.addEventListener('click')
+}
+
+}
+
+
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
@@ -14,6 +50,7 @@ $(function () {
   // attribute of each time-block be used to conditionally add or remove the
   // past, present, and future classes? How can Day.js be used to get the
   // current hour in 24-hour time?
+  createHourElements();
 
   var currentDay = dayjs().format('dddd');
   $('#currentDay').text("Today is " + currentDay);
