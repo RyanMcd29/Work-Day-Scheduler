@@ -6,12 +6,15 @@ $(function () {
 function createHourElements() {
 for (var i = 9; i <= 17; i++) {
   var hourListEl = $('#hour-list');
+  var setTime = dayjs().hour(i).format('ha');
 
   var hourEl = $('<div>');
   hourEl.addClass('row time-block')
+  hourEl.attr('id', setTime);
+
 
   var hourTitle = $('<div>');
-  hourTitle.text(dayjs().hour(i).format('ha'));
+  hourTitle.text(setTime);
   hourTitle.addClass('col-2 col-md-1 hour text-center py-3');
   
   var inputBox = $('<textarea>');
@@ -32,7 +35,9 @@ for (var i = 9; i <= 17; i++) {
 
   hourListEl.append(hourEl)
 
-  //saveBtnEl.addEventListener('click')
+  // $("#(setTime) button").click(function(){
+  // })
+
 }
 
 }
