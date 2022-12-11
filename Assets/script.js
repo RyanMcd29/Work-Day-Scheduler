@@ -35,8 +35,7 @@ for (var i = 9; i <= 17; i++) {
 
   hourListEl.append(hourEl)
 
-  // $("#(setTime) button").click(function(){
-  // })
+  applyClasstoHourElements(i, setTime)
 
 }
 
@@ -49,12 +48,30 @@ for (var i = 9; i <= 17; i++) {
   // function? How can DOM traversal be used to get the "hour-x" id of the
   // time-block containing the button that was clicked? How might the id be
   // useful when saving the description in local storage?
-  //
+
+
+
   // TODO: Add code to apply the past, present, or future class to each time
   // block by comparing the id to the current hour. HINTS: How can the id
   // attribute of each time-block be used to conditionally add or remove the
   // past, present, and future classes? How can Day.js be used to get the
   // current hour in 24-hour time?
+  function applyClasstoHourElements(i, setTime) {
+    var setHour = dayjs().hour(i).format('H')
+    var currentHour = dayjs().hour();
+    var setHourClass = currentHour - setHour;
+    console.log(setHourClass)
+    
+    if (setHourClass > 0) {
+      $('#'+setTime).addClass('past');
+    } else if (setHourClass == 0) {
+      $('#'+setTime).addClass('present');
+    } else if (setHourClass < 0) {
+      $('#'+setTime).addClass('future');
+    }
+  }
+
+  
   createHourElements();
 
   var currentDay = dayjs().format('dddd');
