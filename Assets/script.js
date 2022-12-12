@@ -1,31 +1,40 @@
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
+var hourListEl = $('#hour-list');
+
+function saveItem(event) {
+  var btnClicked = $(event.target);
+  console.log(saveHour)
+  var saveHour = '#'+btnClicked.parent().parent().attr('id');
+  console.log(saveHour)
+  eventText = $(saveHour).children('textarea').val()
+  localStorage.setItem(saveHour, JSON.stringify(eventText));
+};
+
 $(function () {
 
 function createHourElements() {
 for (var i = 9; i <= 17; i++) {
-  var hourListEl = $('#hour-list');
   var setTime = dayjs().hour(i).format('ha');
-
   var hourEl = $('<div>');
   hourEl.addClass('row time-block')
-  hourEl.attr('id', setTime);
-
-
+  hourID = 'hour-'+setTime;
+  hourEl.attr('id', hourID);
+  hourID = 'hour-'+setTime;  
+  
   var hourTitle = $('<div>');
   hourTitle.text(setTime);
   hourTitle.addClass('col-2 col-md-1 hour text-center py-3');
   
   var inputBox = $('<textarea>');
   inputBox.addClass('col-8 col-md-10 description');
-  // inputBox.addrows('3')
   
   var saveBtnEl = $('<button>');
   saveBtnEl.addClass('btn saveBtn col-2 col-md-1');
 
   var btnLink = $('<i>')
-  btnLink.addClass('fas fa-save')
+  btnLink.addClass('fas fa-save save')
 
   saveBtnEl.append(btnLink);
 
@@ -35,9 +44,16 @@ for (var i = 9; i <= 17; i++) {
 
   hourListEl.append(hourEl)
 
-  applyClasstoHourElements(i, setTime)
-
+  applyClasstoHourElements(i, hourID)
+  loadTextFromLocalStorage(hourID)
+  
+  // Add event listener
+  hourEl.on('click', '.save', saveItem)
+  
 }
+
+  // Add event listener
+  
 
 }
 
@@ -49,6 +65,9 @@ for (var i = 9; i <= 17; i++) {
   // time-block containing the button that was clicked? How might the id be
   // useful when saving the description in local storage?
 
+  // function saveEvent();
+    
+
 
 
   // TODO: Add code to apply the past, present, or future class to each time
@@ -56,22 +75,27 @@ for (var i = 9; i <= 17; i++) {
   // attribute of each time-block be used to conditionally add or remove the
   // past, present, and future classes? How can Day.js be used to get the
   // current hour in 24-hour time?
-  function applyClasstoHourElements(i, setTime) {
+  function applyClasstoHourElements(i, hourID) {
     var setHour = dayjs().hour(i).format('H')
     var currentHour = dayjs().hour();
     var setHourClass = currentHour - setHour;
-    console.log(setHourClass)
     
     if (setHourClass > 0) {
-      $('#'+setTime).addClass('past');
+      $('#'+hourID).addClass('past');
     } else if (setHourClass == 0) {
-      $('#'+setTime).addClass('present');
+      $('#'+hourID).addClass('present');
     } else if (setHourClass < 0) {
-      $('#'+setTime).addClass('future');
+      $('#'+hourID).addClass('future');
     }
   }
 
-  
+function loadTextFromLocalStorage(hourID) {
+  var oldText = JSON.parse(localStorage.getItem(hourID));
+  console.log(oldText)
+  textEl = $(hourID).children('textarea').placeholder
+  textEl = oldText
+}
+
   createHourElements();
 
   var currentDay = dayjs().format('dddd');
