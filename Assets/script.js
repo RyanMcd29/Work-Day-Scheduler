@@ -5,11 +5,10 @@ var hourListEl = $('#hour-list');
 
 function saveItem(event) {
   var btnClicked = $(event.target);
-  console.log(saveHour)
-  var saveHour = '#'+btnClicked.parent().parent().attr('id');
-  console.log(saveHour)
-  eventText = $(saveHour).children('textarea').val()
-  localStorage.setItem(saveHour, JSON.stringify(eventText));
+  var hourID = btnClicked.parent().parent().attr('id');
+  eventText = $('#'+hourID).children('textarea').val()
+  console.log(hourID)
+  localStorage.setItem(hourID, JSON.stringify(eventText));
 };
 
 $(function () {
@@ -19,9 +18,8 @@ for (var i = 9; i <= 17; i++) {
   var setTime = dayjs().hour(i).format('ha');
   var hourEl = $('<div>');
   hourEl.addClass('row time-block')
-  hourID = 'hour-'+setTime;
-  hourEl.attr('id', hourID);
-  hourID = 'hour-'+setTime;  
+  var hourID = 'hour-'+setTime;
+  hourEl.attr('id', hourID); 
   
   var hourTitle = $('<div>');
   hourTitle.text(setTime);
@@ -52,7 +50,6 @@ for (var i = 9; i <= 17; i++) {
   
 }
 
-  // Add event listener
   
 
 }
@@ -90,20 +87,26 @@ for (var i = 9; i <= 17; i++) {
   }
 
 function loadTextFromLocalStorage(hourID) {
+  console.log(hourID)
   var oldText = JSON.parse(localStorage.getItem(hourID));
-  console.log(oldText)
-  textEl = $(hourID).children('textarea').placeholder
-  textEl = oldText
+  console.log(oldText);
+  textEl = $('#'+hourID).children('textarea').val(oldText);
+  console.log(textEl)
+
+  // textEl = oldText;
+  // $( hourID + "textarea" ).text( "textarea" + oldText );
+
 }
 
   createHourElements();
 
-  var currentDay = dayjs().format('dddd');
-  $('#currentDay').text("Today is " + currentDay);
+ 
   //
   // TODO: Add code to get any user input that was saved in localStorage and set
   // the values of the corresponding textarea elements. HINT: How can the id
   // attribute of each time-block be used to do this?
   //
   // TODO: Add code to display the current date in the header of the page.
+  var currentDay = dayjs().format('dddd');
+  $('#currentDay').text("Today is " + currentDay);
 });
