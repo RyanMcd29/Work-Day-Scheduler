@@ -47,7 +47,6 @@ for (var i = 9; i <= 17; i++) {
     var currentHour = dayjs().hour();
     var setHourClass = currentHour - setHour;
     
-    console.log(currentHour)
     if (setHourClass > 0) {
       $('#'+hourID).addClass('past');
     } else if (setHourClass == 0) {
@@ -59,11 +58,8 @@ for (var i = 9; i <= 17; i++) {
 
 // Load events from local storage on page load
 function loadTextFromLocalStorage(hourID) {
-  console.log(hourID)
   var oldText = JSON.parse(localStorage.getItem(hourID));
-  console.log(oldText);
   textEl = $('#'+hourID).children('textarea').val(oldText);
-  console.log(textEl)
 }
 
   
@@ -72,7 +68,6 @@ function saveItem(event) {
   var btnClicked = $(event.target);
   var hourID = btnClicked.parent().parent().attr('id');
   eventText = $('#'+hourID).children('textarea').val()
-  console.log(hourID)
   localStorage.setItem(hourID, JSON.stringify(eventText));
 };
 
