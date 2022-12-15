@@ -1,7 +1,7 @@
 # Work Day Scheduler
 https://ryanmcd29.github.io/Work-Day-Scheduler/
 
-![Screenshot of program](./assets/Screenshot.png)
+![Screenshot of program](assets/images/Screenshot.png)
 
 ## Description
 Work day scheduler for planning out a standard work day from 9am to 5pm. Each event can be saved locally and is loaded when the page is loaded.
